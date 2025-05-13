@@ -7,7 +7,9 @@ module com.example.projetjavaresto {
     requires org.kordamp.bootstrapfx.core;
     requires java.sql;
     requires java.desktop;
+    requires transitive com.google.gson;
 
     opens com.example.projetjavaresto to javafx.fxml;
+    opens Class to com.google.gson;
     exports com.example.projetjavaresto;
 }

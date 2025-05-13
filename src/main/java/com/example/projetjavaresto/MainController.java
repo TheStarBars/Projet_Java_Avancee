@@ -20,6 +20,8 @@ public class MainController {
     public Button AddDishesButton;
     @FXML
     public Button ListDishesButton;
+    @FXML
+    public Button AddCommandButton;
     public void NavigateTo(javafx.event.ActionEvent event ) throws IOException {
         Stage stage = null;
         Parent myNewScene = null;
@@ -30,6 +32,9 @@ public class MainController {
         }else if (event.getSource() == ListDishesButton) {
             stage = (Stage) ListDishesButton.getScene().getWindow();
             myNewScene = FXMLLoader.load(MainController.class.getResource("ListDishesView.fxml"));
+        }else if (event.getSource() == AddCommandButton) {
+            stage = (Stage) AddCommandButton.getScene().getWindow();
+            myNewScene = FXMLLoader.load(MainController.class.getResource("AddCommandView.fxml"));
         }
 
         Scene scene = new Scene(myNewScene);
