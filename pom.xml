@@ -81,7 +81,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                com.example.projetjavaresto/com.example.projetjavaresto.HelloApplication
+                                com.example.projetjavaresto/com.example.projetjavaresto.Main
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
