@@ -70,7 +70,7 @@ public class AddDishesController extends ConnectDB {
         else {
             Connection connect = getConnection();
             Statement statement = connect.createStatement();
-            int rs = statement.executeUpdate(
+            statement.executeUpdate(
                     "INSERT INTO `plats` (`nom`, `description`, `prix`,`image`) VALUES ('"
                             + name + "', '"
                             + desc + "', '"
