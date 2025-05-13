@@ -4,6 +4,7 @@ package com.example.projetjavaresto;
 import Utils.ConnectDB;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
 
 import javax.swing.*;
 import java.io.File;
@@ -25,16 +26,20 @@ public class AddDishesController extends ConnectDB {
 
     @FXML
     private void UploadFile() throws IOException {
-        JFileChooser chooser = new JFileChooser();
-        String path = "";
-        chooser.showOpenDialog(null);
-        if (chooser.getSelectedFile() != null) {
-            File picture = chooser.getSelectedFile();
-            path = picture.getPath().replace("\\", "\\\\");
-            pathLabel.setText(path);
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Sélectionner un fichier");
 
-            }
+        // Ouvre la boîte de dialogue et récupère le fichier choisi
+        File selectedFile = chooser.showOpenDialog(null);
+
+        if (selectedFile != null) {
+            String path = selectedFile.getAbsolutePath();
+            pathLabel.setText(path);
+            System.out.println("Fichier sélectionné : " + path);
+        } else {
+            System.out.println("Aucun fichier sélectionné.");
         }
+    }
 
 
 
