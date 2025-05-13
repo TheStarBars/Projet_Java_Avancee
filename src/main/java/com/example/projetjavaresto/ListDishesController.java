@@ -19,7 +19,6 @@ import static Utils.ConnectDB.getConnection;
 
 
 public class ListDishesController {
-    private ArrayList<Plat> dishesList = new ArrayList<>();
     @FXML
     private ListView<String> DishesListView;
 
@@ -29,13 +28,15 @@ public class ListDishesController {
         Statement statement = connect.createStatement();
         ResultSet rs = statement.executeQuery("SELECT * FROM Plats;");
 
-        List<String> formattedPlats = new ArrayList<>();
-
+        List<Plat> plats = new ArrayList<>();
         while (rs.next()) {
-            String nom = rs.getString("nom");
-            double prix = rs.getDouble("prix");
-            formattedPlats.add(nom + " - " + prix + "€");
+            plats.add(new Plat(rs.getString("nom"), rs.getString("description")
+                    ,rs.getDouble("prix"), rs.getString("image")));
         }
+
+        List<String> formattedPlats = plats.stream()
+                .map(plat -> plat.getName() + " - " + plat.getPrice() + "€")
+                .collect(Collectors.toList());
 
         DishesListView.setItems(FXCollections.observableList(formattedPlats));
     }

@@ -34,7 +34,7 @@ public class MainController {
 
         Scene scene = new Scene(myNewScene);
         stage.setScene(scene);
-        stage.setTitle("My New Scene");
+        stage.setTitle("KrampTeckResto");
         stage.show();
 
     }
