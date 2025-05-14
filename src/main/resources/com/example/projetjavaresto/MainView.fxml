@@ -3,13 +3,29 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
-
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projetjavaresto.MainController">
    <children>
-      <Button layoutX="124.0" layoutY="95.0" mnemonicParsing="false" text="Button" fx:id="ListDishesButton" onAction="#NavigateTo"/>
-      <Button layoutX="399.0" layoutY="95.0" mnemonicParsing="false" text="Button" fx:id="AddDishesButton" onAction="#NavigateTo"/>
-      <Label layoutX="128.0" layoutY="69.0" text="liste plat" fx:id="ListDishesLabel" />
-      <Label layoutX="400.0" layoutY="69.0" text="ajout plat" fx:id="AddDishesLabel" />
+      <Button fx:id="ListDishesButton" layoutX="134.0" layoutY="107.0" mnemonicParsing="false" onAction="#NavigateTo" text="Button" />
+      <Button fx:id="AddDishesButton" layoutX="409.0" layoutY="107.0" mnemonicParsing="false" onAction="#NavigateTo" text="Button" />
+      <Label fx:id="ListDishesLabel" layoutX="128.0" layoutY="69.0" text="Liste plat">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
+      <Label fx:id="AddDishesLabel" layoutX="400.0" layoutY="69.0" text="Ajout plat">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
+      <Label fx:id="AddCommandLabel" layoutX="105.0" layoutY="200.0" text="Ajout Commande">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
+      <Button fx:id="AddCommandButton" layoutX="134.0" layoutY="237.0" mnemonicParsing="false" onAction="#NavigateTo" text="Button" />
+      <Label fx:id="ListCommandLabel" layoutX="376.0" layoutY="196.0" text="Liste Commande">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
+      <Button fx:id="ListCommandButton" layoutX="409.0" layoutY="237.0" mnemonicParsing="false" onAction="#NavigateTo" text="Button" />
    </children>
 </AnchorPane>

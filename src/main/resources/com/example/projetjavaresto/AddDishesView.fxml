@@ -6,23 +6,35 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="525.0" prefWidth="610.0" spacing="20.0" xmlns="http://javafx.com/javafx/23.0.1"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.projetjavaresto.AddDishesController">
+<VBox alignment="CENTER" prefHeight="525.0" prefWidth="610.0" spacing="20.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projetjavaresto.AddDishesController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
    <children>
-      <Label text="nom" />
+      <Label text="nom:">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
       <TextField fx:id="nameField" />
-      <Label text="description" />
+      <Label text="description:">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
       <TextArea fx:id="descriptionField" prefHeight="200.0" prefWidth="200.0" />
-      <Label text="Prix" />
+      <Label prefHeight="21.0" prefWidth="35.0" text="Prix:">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
       <TextField fx:id="priceField" />
-      <Label text="Image" />
+      <Label prefHeight="32.0" prefWidth="61.0" text="Image:">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
       <Button mnemonicParsing="false" onAction="#UploadFile" text="import" />
       <Label fx:id="pathLabel" />
       <Button mnemonicParsing="false" onAction="#handleSubmit" text="submit" />
+      <Button mnemonicParsing="false" text="Retour" onAction="#ReturnMainMenu" />
    </children>
 </VBox>

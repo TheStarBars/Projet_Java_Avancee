@@ -3,15 +3,20 @@ package com.example.projetjavaresto;
 
 import Utils.ConnectDB;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import static Utils.ReturnMainMenu.MainMenu;
 
 public class AddDishesController extends ConnectDB {
     @FXML
@@ -70,7 +75,7 @@ public class AddDishesController extends ConnectDB {
         else {
             Connection connect = getConnection();
             Statement statement = connect.createStatement();
-            int rs = statement.executeUpdate(
+            statement.executeUpdate(
                     "INSERT INTO `plats` (`nom`, `description`, `prix`,`image`) VALUES ('"
                             + name + "', '"
                             + desc + "', '"
@@ -86,4 +91,11 @@ public class AddDishesController extends ConnectDB {
             pathLabel.setText("");
         }
     }
+
+    @FXML
+    private void ReturnMainMenu(javafx.event.ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        MainMenu(stage);
+    }
+
 }
