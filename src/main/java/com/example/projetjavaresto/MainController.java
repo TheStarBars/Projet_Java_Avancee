@@ -24,6 +24,14 @@ public class MainController {
     public Button AddCommandButton;
     @FXML
     public Button ListCommandButton;
+    @FXML
+    public Button AddTableButton;
+    @FXML
+    public Button ListTableButton;
+
+    @FXML
+    public Button AdminPanelButton;
+
     public void NavigateTo(javafx.event.ActionEvent event ) throws IOException {
         Stage stage = null;
         Parent myNewScene = null;
@@ -40,6 +48,15 @@ public class MainController {
         }else if (event.getSource() == ListCommandButton) {
             stage = (Stage) ListCommandButton.getScene().getWindow();
             myNewScene = FXMLLoader.load(MainController.class.getResource("ListCommandView.fxml"));
+        }else if (event.getSource() == AddTableButton) {
+            stage = (Stage) AddTableButton.getScene().getWindow();
+            myNewScene = FXMLLoader.load(MainController.class.getResource("AddTableView.fxml"));
+        }else if (event.getSource() == ListTableButton) {
+            stage = (Stage) ListTableButton.getScene().getWindow();
+            myNewScene = FXMLLoader.load(MainController.class.getResource("ListTableView.fxml"));
+        }else if (event.getSource() == AdminPanelButton) {
+            stage = (Stage) AdminPanelButton.getScene().getWindow();
+            myNewScene = FXMLLoader.load(MainController.class.getResource("AdminConnexionView.fxml"));
         }
 
         Scene scene = new Scene(myNewScene);
