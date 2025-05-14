@@ -1,9 +1,12 @@
 package com.example.projetjavaresto;
 
 import Class.Plat;
+
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -12,6 +15,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,11 +26,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static Utils.ConnectDB.getConnection;
+import static Utils.ReturnMainMenu.MainMenu;
 
 public class ListDishesController {
 
     @FXML
     private ListView<Plat> DishesListView; // ✅ maintenant typée avec Plat
+
+    @FXML
+    private Button ReturnButton;
 
     private List<Plat> plats = new ArrayList<>(); // on la garde pour les détails
 
@@ -91,4 +100,12 @@ public class ListDishesController {
         popupStage.initModality(Modality.APPLICATION_MODAL);
         popupStage.showAndWait();
     }
+
+    @FXML
+    private void ReturnMainMenu(javafx.event.ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        MainMenu(stage);
+    }
+
+
 }

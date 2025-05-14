@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projetjavaresto.ListCommandController">
+   <children>
+      <ListView fx:id="CommandeListView" layoutX="181.0" layoutY="47.0" prefHeight="304.0" prefWidth="243.0" />
+      <Label layoutX="206.0" layoutY="14.0" text="Liste commande en attente">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
+      <Button fx:id="preparee" layoutX="67.0" layoutY="187.0" mnemonicParsing="false" onAction="#UpdateStatut" text="Préparer" />
+      <Button fx:id="annulee" layoutX="480.0" layoutY="187.0" mnemonicParsing="false" onAction="#UpdateStatut" text="Annuler" />
+      <Button layoutY="1.0" mnemonicParsing="false" text="Retour" onAction="#ReturnMainMenu" />
+   </children>
+</AnchorPane>

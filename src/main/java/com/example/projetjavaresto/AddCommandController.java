@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -13,12 +14,15 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static Utils.ConnectDB.getConnection;
+import static Utils.ReturnMainMenu.MainMenu;
 
 public class AddCommandController {
 
@@ -101,6 +105,7 @@ public class AddCommandController {
                         + "En préparation" + "')");
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        CommandList.clear();
         platsList.clear();
         CommandListView.getItems().clear();
         alert.setTitle("Succès");
@@ -110,4 +115,12 @@ public class AddCommandController {
 
 
     }
+
+    @FXML
+    private void ReturnMainMenu(javafx.event.ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        MainMenu(stage);
+    }
+
+
 }
