@@ -1,7 +1,7 @@
 package com.example.projetjavaresto;
 
 import Class.Plat;
-import Class.Commande;
+import Class.Table;
 import com.google.gson.Gson;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,11 +14,13 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static Utils.ConnectDB.getConnection;
@@ -30,6 +32,9 @@ public class AddCommandController {
     private ListView<Plat> DishesListView; // ✅ maintenant typée avec Plat
 
     @FXML
+    private ComboBox<String> DishesComboBox;
+
+    @FXML
     private ListView<String> CommandListView;
     @FXML
     private Button AddCommandButton;
@@ -37,6 +42,8 @@ public class AddCommandController {
     private List<Plat> plats = new ArrayList<>(); // on la garde pour les détails
 
     private List<Plat> CommandList = new ArrayList<>();
+
+    public String tableValue;
 
     @FXML
     public void initialize() throws SQLException {
@@ -53,9 +60,12 @@ public class AddCommandController {
             ));
         }
 
+        statement.close();
+
         List<Plat> platsList = plats.stream().collect(Collectors.toList());
 
         DishesListView.setItems(FXCollections.observableList(platsList));
+
 
         // ✅ Custom affichage dans la ListView
         DishesListView.setCellFactory(listView -> new ListCell<>() {
@@ -87,11 +97,49 @@ public class AddCommandController {
                 }
             }
         });
+        loadFreeTablesIntoComboBox();
+    }
+
+    private void loadFreeTablesIntoComboBox() throws SQLException {
+        Connection connect = getConnection();
+        Statement statement = connect.createStatement();
+        ResultSet res = statement.executeQuery("SELECT * FROM tables;");
+
+        List<Table> tables = new ArrayList<>();
+        while (res.next()) {
+            tables.add(new Table(
+                    res.getInt("id"),
+                    res.getInt("taille"),
+                    res.getString("statut")
+            ));
+        }
+
+        List<Table> freeTables = tables.stream()
+                .filter(table -> Objects.equals(table.getStatus(), "Libre"))
+                .collect(Collectors.toList());
+
+        System.out.println(freeTables);
+
+        // Clear previous items before adding new ones
+        DishesComboBox.getItems().clear();
+        freeTables.forEach(table -> DishesComboBox.getItems().add(table.getId()));
+    }
+
+
+    public int HandleTableSelection() throws SQLException {
+        DishesComboBox.getSelectionModel().getSelectedItem();
+        tableValue = DishesComboBox.getValue();
+        System.out.println(tableValue);
+
+        return Integer.parseInt(tableValue);
+
     }
 
     public void MakeCommand() throws SQLException {
         List<Plat> platsList = CommandList.stream()
                 .collect(Collectors.toList());
+
+        int table = HandleTableSelection();
 
         Gson gson = new Gson();
         String json = gson.toJson(platsList);
@@ -100,14 +148,19 @@ public class AddCommandController {
 
         statement.executeUpdate(
                 "INSERT INTO `commandes` (`id_table`, `liste_plats`, `statut`) VALUES ('"
-                        + 1 + "', '"
+                        + table + "', '"
                         + json.replace("'", "\\'") + "', '" // Échappement de '
                         + "En préparation" + "')");
+
+
+        statement.executeUpdate(
+                "UPDATE `tables` SET `statut` = 'Occupée' WHERE `id` = " + table);
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         CommandList.clear();
         platsList.clear();
         CommandListView.getItems().clear();
+        loadFreeTablesIntoComboBox();
         alert.setTitle("Succès");
         alert.setHeaderText("Commande ajoutée avec succès");
         alert.showAndWait();

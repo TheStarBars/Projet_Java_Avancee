@@ -33,18 +33,18 @@ public class AddDishesController extends ConnectDB {
     private void UploadFile() throws IOException {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Sélectionner un fichier");
-
         // Ouvre la boîte de dialogue et récupère le fichier choisi
         File selectedFile = chooser.showOpenDialog(null);
-
         if (selectedFile != null) {
-            String path = selectedFile.getAbsolutePath();
-            pathLabel.setText(path);
-            System.out.println("Fichier sélectionné : " + path);
-        } else {
-            System.out.println("Aucun fichier sélectionné.");
-        }
+        String path = selectedFile.getAbsolutePath().replace("\\", "\\\\");
+        pathLabel.setText(path);
+        System.out.println("Fichier sélectionné : " + path);
+    } else {
+        System.out.println("Aucun fichier sélectionné.");
     }
+
+
+}
 
 
 
@@ -57,7 +57,7 @@ public class AddDishesController extends ConnectDB {
             alert.setHeaderText("trop long");
             alert.showAndWait();
         }
-        if (!priceField.getText().matches("\\b\\d+.\\d{2}\\b") ) {
+        else if (!priceField.getText().matches("\\b\\d+.\\d{2}\\b") ) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
             alert.setHeaderText("votre prix de être du format 5.05");

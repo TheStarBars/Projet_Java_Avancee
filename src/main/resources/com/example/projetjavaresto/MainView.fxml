@@ -27,5 +27,17 @@
             <Font size="16.0" />
          </font></Label>
       <Button fx:id="ListCommandButton" layoutX="409.0" layoutY="237.0" mnemonicParsing="false" onAction="#NavigateTo" text="Button" />
+      <Button layoutX="134.0" layoutY="350.0" mnemonicParsing="false" text="Button" fx:id="AddTableButton" onAction="#NavigateTo" />
+      <Button layoutX="409.0" layoutY="350.0" mnemonicParsing="false" text="Button" fx:id="ListTableButton" onAction="#NavigateTo"/>
+      <Label layoutX="120.0" layoutY="307.0" text="Ajout Table" >
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="394.0" layoutY="307.0" text="Liste Tables">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

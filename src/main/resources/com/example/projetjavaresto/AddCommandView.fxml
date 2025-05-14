@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,7 +11,7 @@
    <children>
       <ListView fx:id="DishesListView" layoutX="14.0" layoutY="50.0" prefHeight="335.0" prefWidth="274.0" />
       <ListView fx:id="CommandListView" layoutX="319.0" layoutY="50.0" prefHeight="280.0" prefWidth="262.0" />
-      <Button fx:id="AddCommandButton" layoutX="394.0" layoutY="339.0" mnemonicParsing="false" onAction="#MakeCommand" text="Envoyé en Cuisine" />
+      <Button fx:id="AddCommandButton" layoutX="469.0" layoutY="339.0" mnemonicParsing="false" onAction="#MakeCommand" text="Envoyé en Cuisine" />
       <Label layoutX="105.0" layoutY="14.0" text="Liste de plats">
          <font>
             <Font size="16.0" />
@@ -21,6 +22,7 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <Button layoutY="1.0" mnemonicParsing="false" text="Retour" onAction="#ReturnMainMenu" />
+      <Button layoutY="1.0" mnemonicParsing="false" onAction="#ReturnMainMenu" text="Retour" />
+      <ComboBox layoutX="319.0" layoutY="339.0" prefWidth="150.0" fx:id="DishesComboBox"/>
    </children>
 </AnchorPane>
