@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projetjavaresto.AdminPanelController">
+   <children>
+      <Label layoutX="189.0" layoutY="30.0" text="Panel Administrateur">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="122.0" layoutY="115.0" text="Liste des employés">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="333.0" layoutY="115.0" text="Ajouter des employés">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Button layoutX="163.0" layoutY="175.0" mnemonicParsing="false" text="Button" fx:id="EmployeeListButton" onAction="#NavigateTo"/>
+      <Button layoutX="384.0" layoutY="175.0" mnemonicParsing="false" text="Button" fx:id="EmployeeAddButton" onAction="#NavigateTo"/>
+      <Button layoutY="-1.0" mnemonicParsing="false" text="Retour" onAction="#ReturnMainMenu" />
+   </children>
+</AnchorPane>
