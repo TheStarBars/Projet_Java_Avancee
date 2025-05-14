@@ -16,4 +16,12 @@ public class ReturnMainMenu {
         currentStage.setTitle("KrampTeckResto");
         currentStage.show();
     }
+
+    public static void AdminMenu(Stage currentStage) throws IOException {
+        Parent root = FXMLLoader.load(MainController.class.getResource("AdminPanelView.fxml"));
+        Scene scene = new Scene(root);
+        currentStage.setScene(scene);
+        currentStage.setTitle("KrampTeckResto");
+        currentStage.show();
+    }
 }

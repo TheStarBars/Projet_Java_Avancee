@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.projetjavaresto.AdminPanelListEmployeeController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projetjavaresto.AdminPanelListEmployeeController">
+   <children>
+      <Button layoutY="-2.0" mnemonicParsing="false" onAction="#ReturnMainMenu" text="Retour" />
+      <ListView fx:id="EmployeListView" layoutX="96.0" layoutY="56.0" prefHeight="252.0" prefWidth="273.0" />
+      <Button layoutX="197.0" layoutY="333.0" mnemonicParsing="false" onAction="#DeleteEmploye" text="Supprimer" />
+      <Label layoutX="200.0" layoutY="5.0" text="Liste des employés">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TextField layoutX="420.0" layoutY="156.0" fx:id="HourField"/>
+      <Button layoutX="437.0" layoutY="211.0" mnemonicParsing="false" text="Ajouter des heures" onAction="#AddHour"/>
+      <Label layoutX="436.0" layoutY="108.0" text="Nombre d'heures">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+   </children>
 </AnchorPane>
