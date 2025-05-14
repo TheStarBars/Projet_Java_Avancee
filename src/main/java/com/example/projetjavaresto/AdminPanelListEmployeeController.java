@@ -129,8 +129,14 @@ public class AdminPanelListEmployeeController {
             if (rs.next()) {
                 int hoursWorked = rs.getInt("nb_heure_travaillee");
                 int totalHours = hoursWorked + hours;
-                statement.executeUpdate("UPDATE employe SET nb_heure_travaillee = " + totalHours + " WHERE id = "+ id +";");}
+                statement.executeUpdate("UPDATE employe SET nb_heure_travaillee = " + totalHours + " WHERE id = "+ id +";");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Success");
+                alert.setHeaderText("Ajouter avec succes");
+                alert.showAndWait();
+            }
         }
+        HourField.clear();
         getEmployes();
 
     }
