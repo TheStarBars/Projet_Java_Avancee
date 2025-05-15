@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="ProjetKramptechResto">
+    <output-path>$PROJECT_DIR$/out/artifacts/ProjetKramptechResto</output-path>
+    <root id="archive" name="ProjetKramptechResto.jar" />
+  </artifact>
+</component>
