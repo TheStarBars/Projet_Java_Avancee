@@ -58,6 +58,11 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.google</groupId>
+            <artifactId>google</artifactId>
+            <version>5</version>
+        </dependency>
     </dependencies>
 
     <build>
