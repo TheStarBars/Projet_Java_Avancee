@@ -18,7 +18,7 @@ public class Main extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 640, 480);
         scene.getStylesheets().add(getClass().getResource("/CSS/app.css").toExternalForm());
         stage.setTitle("KrampTeckResto");
-        Image image = new Image(Main.class.getResourceAsStream("Logo.png"));
+        Image image = new Image(Main.class.getResourceAsStream("/assets/Logo.png"));
         stage.getIcons().add(image);
         stage.setScene(scene);
         stage.show();

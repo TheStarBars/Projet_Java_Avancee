@@ -24,7 +24,9 @@
 /* Hover and disabled states */
 .button:hover {
     -fx-background-color: #019fcf;
+    -fx-effect: dropshadow(gaussian, rgba(1,177,230,0.3), 10, 0.3, 0, 4);
 }
+
 
 .button:disabled {
     -fx-background-color: #cccccc;
@@ -36,4 +38,30 @@
     -fx-font-size: 22px;
     -fx-font-weight: bold;
     -fx-text-fill: #FF914D;
+}
+.header {
+    -fx-background-color: white;
+    -fx-padding: 15;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 0 0 1 0;
+}
+
+.app-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #01B1E6;
+}
+
+.main-panel {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 10, 0.2, 0, 3);
+    -fx-padding: 40;
+}
+
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 16;
+    -fx-padding: 30;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0.1, 0, 2);
 }

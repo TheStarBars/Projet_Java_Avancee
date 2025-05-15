@@ -5,8 +5,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import Class.Timer;
 
@@ -35,11 +38,15 @@ public class MainController {
     public Button AdminPanelButton;
 
     @FXML
-    public Label TimeLabel;
+    public Label TimerLabel;
+
+    @FXML
+    private ImageView LogoView;
 
     private Timer timer;
 
     public void initialize() {
+        LogoView.setImage(new Image(getClass().getResourceAsStream("/assets/Logo.png")));
         startTimer();
         updateUI();
 
@@ -55,7 +62,14 @@ public class MainController {
         int minutesPart = seconds / 60;
         int secondsPart = seconds % 60;
 
-        TimeLabel.setText(String.format("Temps restant: %02d:%02d", minutesPart, secondsPart));
+        TimerLabel.setText(String.format("%02d:%02d", minutesPart, secondsPart));
+
+        if (timer.getTimeLeft() <= 10) {
+            TimerLabel.setStyle("-fx-text-fill: #D84A4A;"); // Red
+        } else {
+            TimerLabel.setStyle("-fx-text-fill: #FF914D;"); // Orange
+        }
+
     }
 
 
@@ -71,6 +85,11 @@ public class MainController {
             myNewScene = FXMLLoader.load(MainController.class.getResource("ListDishesView.fxml"));
         }else if (event.getSource() == AddCommandButton) {
             if (!timer.canTakeCommande()) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Timer dépasser");
+                alert.setHeaderText(null);
+                alert.setContentText("Votre temps de service est fini");
+                alert.showAndWait();
                 System.out.println("Trop tard pour commander");
                 return;
             }
