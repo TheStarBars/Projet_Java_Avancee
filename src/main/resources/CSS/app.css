@@ -1,0 +1,39 @@
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-background-color: #f9fafb;
+}
+
+/* General button style */
+.button {
+    -fx-background-color: #01B1E6;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-background-radius: 10px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 3, 0, 0, 1);
+    -fx-padding: 12 20;
+}
+
+/* Button size standard */
+.menu-button {
+    -fx-pref-width: 220;
+    -fx-pref-height: 45;
+}
+
+/* Hover and disabled states */
+.button:hover {
+    -fx-background-color: #019fcf;
+}
+
+.button:disabled {
+    -fx-background-color: #cccccc;
+    -fx-text-fill: #888;
+}
+
+/* Timer styling */
+#TimerLabel {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FF914D;
+}

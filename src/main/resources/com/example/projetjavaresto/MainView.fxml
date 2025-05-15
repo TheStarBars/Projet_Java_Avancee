@@ -5,46 +5,39 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projetjavaresto.MainController">
-   <children>
-      <Button fx:id="ListDishesButton" layoutX="134.0" layoutY="56.0" mnemonicParsing="false" onAction="#NavigateTo" prefHeight="25.0" prefWidth="52.0" text="Button" />
-      <Button fx:id="AddDishesButton" layoutX="409.0" layoutY="56.0" mnemonicParsing="false" onAction="#NavigateTo" text="Button" />
-      <Label fx:id="ListDishesLabel" layoutX="128.0" layoutY="27.0" text="Liste plat">
-         <font>
-            <Font size="16.0" />
-         </font></Label>
-      <Label fx:id="AddDishesLabel" layoutX="400.0" layoutY="27.0" text="Ajout plat">
-         <font>
-            <Font size="16.0" />
-         </font></Label>
-      <Label fx:id="AddCommandLabel" layoutX="373.0" layoutY="89.0" text="Ajout Commande">
-         <font>
-            <Font size="16.0" />
-         </font></Label>
-      <Button fx:id="AddCommandButton" layoutX="409.0" layoutY="121.0" mnemonicParsing="false" onAction="#NavigateTo" text="Button" />
-      <Label fx:id="ListCommandLabel" layoutX="101.0" layoutY="89.0" text="Liste Commande">
-         <font>
-            <Font size="16.0" />
-         </font></Label>
-      <Button fx:id="ListCommandButton" layoutX="134.0" layoutY="121.0" mnemonicParsing="false" onAction="#NavigateTo" text="Button" />
-      <Button fx:id="AddTableButton" layoutX="409.0" layoutY="187.0" mnemonicParsing="false" onAction="#NavigateTo" text="Button" />
-      <Button fx:id="ListTableButton" layoutX="134.0" layoutY="187.0" mnemonicParsing="false" onAction="#NavigateTo" text="Button" />
-      <Label layoutX="395.0" layoutY="160.0" text="Ajout Table">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label layoutX="119.0" layoutY="160.0" text="Liste Tables">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label layoutX="458.0" layoutY="335.0" text="Panel Administrateur" />
-      <Button fx:id="AdminPanelButton" layoutX="487.0" layoutY="360.0" mnemonicParsing="false" onAction="#NavigateTo" text="Button" />
-      <Label layoutX="45.0" layoutY="334.0" text="" fx:id="TimerLabel">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-   </children>
-</AnchorPane>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+
+
+<VBox xmlns="http://javafx.com/javafx/23.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.projetjavaresto.MainController"
+      spacing="30" alignment="CENTER"
+      style="-fx-padding: 40; -fx-background-color: #f9fafb;">
+
+   <!-- Row 1 -->
+   <HBox spacing="40" alignment="CENTER">
+      <Button fx:id="ListDishesButton" text="Liste des plats" onAction="#NavigateTo" styleClass="menu-button" />
+      <Button fx:id="AddDishesButton" text="Ajouter un plat" onAction="#NavigateTo" styleClass="menu-button" />
+   </HBox>
+
+   <!-- Row 2 -->
+   <HBox spacing="40" alignment="CENTER">
+      <Button fx:id="ListCommandButton" text="Liste des commandes" onAction="#NavigateTo" styleClass="menu-button" />
+      <Button fx:id="AddCommandButton" text="Ajouter une commande" onAction="#NavigateTo" styleClass="menu-button" />
+   </HBox>
+
+   <!-- Row 3 -->
+   <HBox spacing="40" alignment="CENTER">
+      <Button fx:id="ListTableButton" text="Liste des tables" onAction="#NavigateTo" styleClass="menu-button" />
+      <Button fx:id="AddTableButton" text="Ajouter une table" onAction="#NavigateTo" styleClass="menu-button" />
+   </HBox>
+
+   <!-- Timer + Admin button -->
+   <HBox spacing="40" alignment="CENTER">
+      <Label fx:id="TimerLabel" text="25:00" />
+      <Button fx:id="AdminPanelButton" text="Panel administrateur" onAction="#NavigateTo" styleClass="menu-button" />
+   </HBox>
+</VBox>
+
+
