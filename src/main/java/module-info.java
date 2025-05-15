@@ -12,4 +12,5 @@ module com.example.projetjavaresto {
     opens com.example.projetjavaresto to javafx.fxml;
     opens Class to com.google.gson;
     exports com.example.projetjavaresto;
+    opens Utils to com.google.gson;
 }
