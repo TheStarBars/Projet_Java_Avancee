@@ -314,3 +314,4 @@ public class ControlPanelController {
         ResarchResultListView.setItems(FXCollections.observableList(research));
     }
 }
+

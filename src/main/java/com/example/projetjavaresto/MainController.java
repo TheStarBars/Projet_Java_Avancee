@@ -126,3 +126,4 @@ public class MainController extends Thread {
         stage.show();
     }
 }
+

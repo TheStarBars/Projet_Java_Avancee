@@ -75,3 +75,4 @@ public class AddTableController {
         alert.showAndWait();
     }
 }
+
