@@ -16,8 +16,8 @@
          </font>
       </Label>
       <ListView fx:id="ControlListView" layoutX="43.0" layoutY="76.0" prefHeight="221.0" prefWidth="200.0" />
-      <Button layoutX="252.0" layoutY="212.0" mnemonicParsing="false" text="En attente" />
-      <Button layoutX="258.0" layoutY="120.0" mnemonicParsing="false" text="Servit" />
+      <Button layoutX="252.0" layoutY="212.0" mnemonicParsing="false" text="En préparation" fx:id="PreparationButton" onAction="#PreparationCommand"/>
+      <Button layoutX="258.0" layoutY="120.0" mnemonicParsing="false" text="Servit" fx:id="DeliveredButton" onAction="#DeliverdCommand"/>
       <Button mnemonicParsing="false" text="Retour" />
       <Label layoutX="550.0" layoutY="75.0" prefHeight="25.0" prefWidth="100.0" text="Plat le plus cher">
          <font>
