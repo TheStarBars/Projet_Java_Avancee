@@ -17,6 +17,8 @@ public class AdminPanelController {
     public Button EmployeeAddButton;
     @FXML
     public Button EmployeeListButton;
+    @FXML
+    public Button GeneratePdfButton;
 
     public void NavigateTo(javafx.event.ActionEvent event ) throws IOException {
         Stage stage = null;
@@ -28,6 +30,9 @@ public class AdminPanelController {
         }else if (event.getSource() == EmployeeAddButton) {
             stage = (Stage) EmployeeAddButton.getScene().getWindow();
             myNewScene = FXMLLoader.load(MainController.class.getResource("AdminPanelListEmployeeView.fxml"));
+        }else if (event.getSource() == GeneratePdfButton) {
+            stage = (Stage) GeneratePdfButton.getScene().getWindow();
+            myNewScene = FXMLLoader.load(MainController.class.getResource("GeneratePdfView.fxml"));
         }
         Scene scene = new Scene(myNewScene);
         stage.setScene(scene);

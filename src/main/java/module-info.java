@@ -8,6 +8,8 @@ module com.example.projetjavaresto {
     requires java.sql;
     requires java.desktop;
     requires transitive com.google.gson;
+    requires kernel;
+    requires layout;
 
     opens com.example.projetjavaresto to javafx.fxml;
     opens Class to com.google.gson;
