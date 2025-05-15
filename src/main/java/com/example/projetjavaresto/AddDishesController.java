@@ -26,6 +26,8 @@ public class AddDishesController extends ConnectDB {
     @FXML
     private TextField priceField;
     @FXML
+    private TextField costField;
+    @FXML
     private Label pathLabel;
 
 
@@ -43,10 +45,7 @@ public class AddDishesController extends ConnectDB {
         System.out.println("Aucun fichier sélectionné.");
     }
 
-
 }
-
-
 
     @FXML
     private void handleSubmit() throws SQLException, IOException {
@@ -60,13 +59,18 @@ public class AddDishesController extends ConnectDB {
         else if (!priceField.getText().matches("\\b\\d+.\\d{2}\\b") ) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
-            alert.setHeaderText("votre prix de être du format 5.05");
+            alert.setHeaderText("votre prix doit être du format 5.05");
+            alert.showAndWait();
+        }else if (!costField.getText().matches("\\b\\d+.\\d{2}\\b") ) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("votre coût doit être du format 5.05");
             alert.showAndWait();
         }
         String desc = descriptionField.getText();
         Double price = Double.valueOf(priceField.getText());
 
-        if(name.isEmpty() || desc.isEmpty() || price <= 0 || pathLabel.getText().isEmpty()) {
+        if(name.isEmpty() || desc.isEmpty() || price <= 0 || pathLabel.getText().isEmpty() || costField.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
             alert.setHeaderText("les champs doivent etre complet");
@@ -76,11 +80,12 @@ public class AddDishesController extends ConnectDB {
             Connection connect = getConnection();
             Statement statement = connect.createStatement();
             statement.executeUpdate(
-                    "INSERT INTO `plats` (`nom`, `description`, `prix`,`image`) VALUES ('"
+                    "INSERT INTO `plats` (`nom`, `description`, `prix`,`image`, `cout`) VALUES ('"
                             + name + "', '"
                             + desc + "', '"
                             + price + "','"
-                            + pathLabel.getText() + "')");
+                            + pathLabel.getText() + "','"
+                            + Double.valueOf(costField.getText()) + "')");
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Success");
             alert.setHeaderText("Ajouter avec succes");
@@ -88,6 +93,7 @@ public class AddDishesController extends ConnectDB {
             nameField.clear();
             descriptionField.clear();
             priceField.clear();
+            costField.clear();
             pathLabel.setText("");
         }
     }

@@ -56,6 +56,7 @@ public class AddCommandController {
                     rs.getString("nom"),
                     rs.getString("description"),
                     rs.getDouble("prix"),
+                    rs.getDouble("cout"),
                     rs.getString("image")
             ));
         }

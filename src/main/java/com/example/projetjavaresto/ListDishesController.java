@@ -49,6 +49,7 @@ public class ListDishesController {
                     rs.getString("nom"),
                     rs.getString("description"),
                     rs.getDouble("prix"),
+                    rs.getDouble("cout"),
                     rs.getString("image")
             ));
         }
@@ -91,7 +92,8 @@ public class ListDishesController {
         vbox.getChildren().addAll(
                 new Label("Nom : " + plat.getName()),
                 new Label("Description : " + plat.getDescription()),
-                new Label("Prix : " + plat.getPrice() + "€"),
+                new Label("Prix : " + String.format("%.2f€", plat.getPrice())),
+                new Label("Cout de fabriquation :" + String.format("%.2f€", plat.getCost())),
                 new ImageView("file:" + plat.getImage()) // tu peux utiliser ImageView si tu veux l’afficher
         );
 
