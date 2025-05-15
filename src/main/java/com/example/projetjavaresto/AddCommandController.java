@@ -145,11 +145,12 @@ public class AddCommandController {
         String json = gson.toJson(platsList);
         Connection connect = getConnection();
         Statement statement = connect.createStatement();
+        System.out.println(json);
 
         statement.executeUpdate(
                 "INSERT INTO `commandes` (`id_table`, `liste_plats`, `statut`) VALUES ('"
                         + table + "', '"
-                        + json.replace("'", "\\'") + "', '" // Échappement de '
+                        + json.replace("'", "\\'").replace("\\", "\\\\") + "', '" // Échappement de '
                         + "En préparation" + "')");
 
 
