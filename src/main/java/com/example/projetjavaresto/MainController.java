@@ -1,5 +1,6 @@
 package com.example.projetjavaresto;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -33,6 +34,31 @@ public class MainController {
     @FXML
     public Button AdminPanelButton;
 
+    @FXML
+    public Label TimeLabel;
+
+    private Timer timer;
+
+    public void initialize() {
+        startTimer();
+        updateUI();
+
+    }
+
+    public void startTimer() {
+        timer = Timer.getInstance(25, () -> Platform.runLater(this::updateUI));
+
+    }
+
+    private void updateUI() {
+        int seconds = timer.getTimeLeft();
+        int minutesPart = seconds / 60;
+        int secondsPart = seconds % 60;
+
+        TimeLabel.setText(String.format("Temps restant: %02d:%02d", minutesPart, secondsPart));
+    }
+
+
     public void NavigateTo(javafx.event.ActionEvent event ) throws IOException {
         Stage stage = null;
         Parent myNewScene = null;
@@ -44,6 +70,10 @@ public class MainController {
             stage = (Stage) ListDishesButton.getScene().getWindow();
             myNewScene = FXMLLoader.load(MainController.class.getResource("ListDishesView.fxml"));
         }else if (event.getSource() == AddCommandButton) {
+            if (!timer.canTakeCommande()) {
+                System.out.println("Trop tard pour commander");
+                return;
+            }
             stage = (Stage) AddCommandButton.getScene().getWindow();
             myNewScene = FXMLLoader.load(MainController.class.getResource("AddCommandView.fxml"));
         }else if (event.getSource() == ListCommandButton) {
