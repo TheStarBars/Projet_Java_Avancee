@@ -41,12 +41,4 @@ public class Plat {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
 }

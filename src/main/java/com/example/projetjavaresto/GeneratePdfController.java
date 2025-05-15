@@ -1,7 +1,6 @@
 package com.example.projetjavaresto;
 
 import Class.Plat;
-import com.itextpdf.kernel.colors.Color;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
@@ -23,19 +22,29 @@ import java.util.stream.Collectors;
 
 import static Utils.ConnectDB.getConnection;
 
+/**
+ * Controller class for generating a PDF report of restaurant revenue.
+ * <p>
+ * This controller handles fetching dish data from the database, displaying
+ * it in a ListView, calculating total revenue, and generating a PDF report
+ * with detailed dish price and cost information.
+ */
 public class GeneratePdfController {
 
     @FXML
     private ListView<String> listView;
-
     @FXML
     private Button generatePdfButton;
-
     @FXML
     private Label revenueLabel;
 
     private List<Plat> allPlats = new ArrayList<>();
 
+    /**
+     * Initializes the controller by fetching all dishes from the database orders,
+     * calculating the revenue (price - cost), and displaying the data in the ListView.
+     * Updates the revenue label with the total revenue.
+     */
     @FXML
     public void initialize() {
         try (Connection conn = getConnection()) {
@@ -45,8 +54,6 @@ public class GeneratePdfController {
             double total = 0;
             while (rs.next()) {
                 String json = rs.getString("liste_plats");
-
-                // Désérialisation avec Gson
                 com.google.gson.reflect.TypeToken<List<Plat>> token = new com.google.gson.reflect.TypeToken<List<Plat>>() {};
                 List<Plat> plats = new com.google.gson.Gson().fromJson(json, token.getType());
 
@@ -57,25 +64,28 @@ public class GeneratePdfController {
                 }
             }
 
-            // Affichage dans la ListView
             List<String> display = allPlats.stream()
-                    .map(p -> p.getName() + " - " + String.format("%.2f €", p.getPrice())+ " - " + String.format("%.2f €", p.getCost()))
+                    .map(p -> p.getName() + " - " + String.format("%.2f €", p.getPrice()) + " - " + String.format("%.2f €", p.getCost()))
                     .collect(Collectors.toList());
-            listView.setItems(FXCollections.observableList(display));
 
+            listView.setItems(FXCollections.observableList(display));
             revenueLabel.setText("Total: " + String.format("%.2f €", total));
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
+    /**
+     * Opens a file chooser to select a save location and generates a PDF document
+     * listing all dishes with their prices and costs, and the total revenue.
+     * The prices are shown in green, costs in red, and the total in bold.
+     */
     @FXML
     private void generatePDF() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Enregistrer le fichier PDF");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichiers PDF", "*.pdf"));
+        fileChooser.setTitle("Save PDF File");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
         File file = fileChooser.showSaveDialog(generatePdfButton.getScene().getWindow());
 
         if (file != null) {
@@ -88,8 +98,10 @@ public class GeneratePdfController {
 
                 double total = 0;
                 for (Plat plat : allPlats) {
-                    document.add(new Paragraph(plat.getName() + " - " + String.format("%.2f €", plat.getPrice())).setFontColor(ColorConstants.GREEN));
-                    document.add(new Paragraph(plat.getName() + " - " + String.format("%.2f €", plat.getCost())).setFontColor(ColorConstants.RED));
+                    document.add(new Paragraph(plat.getName() + " - " + String.format("%.2f €", plat.getPrice()))
+                            .setFontColor(ColorConstants.GREEN));
+                    document.add(new Paragraph(plat.getName() + " - " + String.format("%.2f €", plat.getCost()))
+                            .setFontColor(ColorConstants.RED));
                     total += plat.getPrice();
                     total -= plat.getCost();
                 }
