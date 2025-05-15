@@ -10,16 +10,24 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import Utils.Timer;
 
 import java.io.IOException;
-import Utils.Timer;
-import javafx.util.Duration;
 
+/**
+ * Controller class for the main menu of the restaurant management application.
+ * Handles navigation between views and displays a countdown timer.
+ */
 public class MainController extends Thread {
+
     @FXML
     public Label AddDishesLabel;
     @FXML
     public Label ListDishesLabel;
+    @FXML
+    public Label TimerLabel;
+
     @FXML
     public Button AddDishesButton;
     @FXML
@@ -32,30 +40,30 @@ public class MainController extends Thread {
     public Button AddTableButton;
     @FXML
     public Button ListTableButton;
-
     @FXML
     public Button AdminPanelButton;
 
-    @FXML
-    public Label TimerLabel;
-
-
     private Timeline timeline;
 
+    /**
+     * Initializes the controller after the root element has been processed.
+     * Starts the countdown timer display.
+     */
     @FXML
     public void initialize() {
-        // Lancer la mise à jour régulière du label
         startTimerDisplay();
     }
 
+    /**
+     * Starts a timeline that updates the timer label every second
+     * with the remaining service time from the singleton Timer.
+     */
     private void startTimerDisplay() {
         timeline = new Timeline(
                 new KeyFrame(Duration.seconds(1), event -> {
                     int timeLeft = Timer.getInstance().getTimeLeft();
-
                     int minutes = timeLeft / 60;
                     int seconds = timeLeft % 60;
-
                     TimerLabel.setText(String.format("Temps restant : %02d:%02d", minutes, seconds));
                 })
         );
@@ -63,21 +71,29 @@ public class MainController extends Thread {
         timeline.play();
     }
 
-    public void NavigateTo(javafx.event.ActionEvent event ) throws IOException {
+    /**
+     * Handles navigation to the appropriate view based on the clicked button.
+     *
+     * @param event the action event triggered by clicking a navigation button
+     * @throws IOException if the FXML resource fails to load
+     */
+    public void NavigateTo(javafx.event.ActionEvent event) throws IOException {
         Stage stage = null;
         Parent myNewScene = null;
 
-        if (event.getSource() == AddDishesButton){
+        if (event.getSource() == AddDishesButton) {
             stage = (Stage) AddDishesButton.getScene().getWindow();
             myNewScene = FXMLLoader.load(MainController.class.getResource("AddDishesView.fxml"));
-        }else if (event.getSource() == ListDishesButton) {
+
+        } else if (event.getSource() == ListDishesButton) {
             stage = (Stage) ListDishesButton.getScene().getWindow();
             myNewScene = FXMLLoader.load(MainController.class.getResource("ListDishesView.fxml"));
-        }else if (event.getSource() == AddCommandButton) {
-            if (Utils.Timer.getInstance().canTakeCommande()) {
+
+        } else if (event.getSource() == AddCommandButton) {
+            if (Timer.getInstance().canTakeCommande()) {
                 stage = (Stage) AddCommandButton.getScene().getWindow();
                 myNewScene = FXMLLoader.load(MainController.class.getResource("AddCommandView.fxml"));
-            }else {
+            } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Timer dépasser");
                 alert.setHeaderText(null);
@@ -86,16 +102,20 @@ public class MainController extends Thread {
                 stage = (Stage) AddCommandButton.getScene().getWindow();
                 myNewScene = FXMLLoader.load(MainController.class.getResource("MainView.fxml"));
             }
-        }else if (event.getSource() == ListCommandButton) {
+
+        } else if (event.getSource() == ListCommandButton) {
             stage = (Stage) ListCommandButton.getScene().getWindow();
             myNewScene = FXMLLoader.load(MainController.class.getResource("ListCommandView.fxml"));
-        }else if (event.getSource() == AddTableButton) {
+
+        } else if (event.getSource() == AddTableButton) {
             stage = (Stage) AddTableButton.getScene().getWindow();
             myNewScene = FXMLLoader.load(MainController.class.getResource("AddTableView.fxml"));
-        }else if (event.getSource() == ListTableButton) {
+
+        } else if (event.getSource() == ListTableButton) {
             stage = (Stage) ListTableButton.getScene().getWindow();
             myNewScene = FXMLLoader.load(MainController.class.getResource("ListTableView.fxml"));
-        }else if (event.getSource() == AdminPanelButton) {
+
+        } else if (event.getSource() == AdminPanelButton) {
             stage = (Stage) AdminPanelButton.getScene().getWindow();
             myNewScene = FXMLLoader.load(MainController.class.getResource("AdminConnexionView.fxml"));
         }
@@ -104,7 +124,5 @@ public class MainController extends Thread {
         stage.setScene(scene);
         stage.setTitle("KrampTeckResto");
         stage.show();
-
     }
-
 }

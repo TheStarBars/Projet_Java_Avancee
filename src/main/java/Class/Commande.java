@@ -7,14 +7,14 @@ public class Commande {
     private int id;
     private String status;
     private ArrayList<Plat> platArrayList;
-    private int TableArrayList;
+    private int tableId;
     private Timestamp dateHeureService;
 
-    public Commande(int id, String status, ArrayList<Plat> platArrayList, int TableArrayList, Timestamp dateHeureService) {
+    public Commande(int id, String status, ArrayList<Plat> platArrayList, int TableId, Timestamp dateHeureService) {
         this.id = id;
         this.status = status;
         this.platArrayList = platArrayList;
-        this.TableArrayList = TableArrayList;
+        this.tableId = TableId;
         this.dateHeureService = dateHeureService;
     }
 
@@ -39,19 +39,7 @@ public class Commande {
         this.status = status;
     }
 
-    public void setPlatArrayList(ArrayList<Plat> platArrayList) {
-        this.platArrayList = platArrayList;
-    }
-
-    public int getTableArrayList() {
-        return TableArrayList;
-    }
-
-    public void setTableArrayList(int tableArrayList) {
-        TableArrayList = tableArrayList;
-    }
-
-    public void setDateHeureService(Timestamp dateHeureService) {
-        this.dateHeureService = dateHeureService;
+    public int getTableId() {
+        return tableId;
     }
 }
