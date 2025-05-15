@@ -1,21 +1,19 @@
 package com.example.projetjavaresto;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import Class.Timer;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
-import Utils.Timer;
-import javafx.util.Duration;
 
-public class MainController extends Thread {
+public class MainController {
     @FXML
     public Label AddDishesLabel;
     @FXML
@@ -37,31 +35,29 @@ public class MainController extends Thread {
     public Button AdminPanelButton;
 
     @FXML
-    public Label TimerLabel;
+    public Label TimeLabel;
 
+    private Timer timer;
 
-    private Timeline timeline;
-
-    @FXML
     public void initialize() {
-        // Lancer la mise à jour régulière du label
-        startTimerDisplay();
+        startTimer();
+        updateUI();
+
     }
 
-    private void startTimerDisplay() {
-        timeline = new Timeline(
-                new KeyFrame(Duration.seconds(1), event -> {
-                    int timeLeft = Timer.getInstance().getTimeLeft();
+    public void startTimer() {
+        timer = Timer.getInstance(25, () -> Platform.runLater(this::updateUI));
 
-                    int minutes = timeLeft / 60;
-                    int seconds = timeLeft % 60;
-
-                    TimerLabel.setText(String.format("Temps restant : %02d:%02d", minutes, seconds));
-                })
-        );
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
     }
+
+    private void updateUI() {
+        int seconds = timer.getTimeLeft();
+        int minutesPart = seconds / 60;
+        int secondsPart = seconds % 60;
+
+        TimeLabel.setText(String.format("Temps restant: %02d:%02d", minutesPart, secondsPart));
+    }
+
 
     public void NavigateTo(javafx.event.ActionEvent event ) throws IOException {
         Stage stage = null;
@@ -74,18 +70,12 @@ public class MainController extends Thread {
             stage = (Stage) ListDishesButton.getScene().getWindow();
             myNewScene = FXMLLoader.load(MainController.class.getResource("ListDishesView.fxml"));
         }else if (event.getSource() == AddCommandButton) {
-            if (Utils.Timer.getInstance().canTakeCommande()) {
-                stage = (Stage) AddCommandButton.getScene().getWindow();
-                myNewScene = FXMLLoader.load(MainController.class.getResource("AddCommandView.fxml"));
-            }else {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Timer dépasser");
-                alert.setHeaderText(null);
-                alert.setContentText("Votre temps de service est fini");
-                alert.showAndWait();
-                stage = (Stage) AddCommandButton.getScene().getWindow();
-                myNewScene = FXMLLoader.load(MainController.class.getResource("MainView.fxml"));
+            if (!timer.canTakeCommande()) {
+                System.out.println("Trop tard pour commander");
+                return;
             }
+            stage = (Stage) AddCommandButton.getScene().getWindow();
+            myNewScene = FXMLLoader.load(MainController.class.getResource("AddCommandView.fxml"));
         }else if (event.getSource() == ListCommandButton) {
             stage = (Stage) ListCommandButton.getScene().getWindow();
             myNewScene = FXMLLoader.load(MainController.class.getResource("ListCommandView.fxml"));

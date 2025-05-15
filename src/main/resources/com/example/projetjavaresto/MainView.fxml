@@ -41,7 +41,7 @@
       </Label>
       <Label layoutX="458.0" layoutY="335.0" text="Panel Administrateur" />
       <Button fx:id="AdminPanelButton" layoutX="487.0" layoutY="360.0" mnemonicParsing="false" onAction="#NavigateTo" text="Button" />
-      <Label layoutX="45.0" layoutY="334.0" text="" fx:id="TimerLabel">
+      <Label layoutX="45.0" layoutY="334.0" text="" fx:id="TimeLabel">
          <font>
             <Font size="24.0" />
          </font>
