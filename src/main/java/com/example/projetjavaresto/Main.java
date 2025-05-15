@@ -1,5 +1,7 @@
 package com.example.projetjavaresto;
 
+import Utils.Timer;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -7,14 +9,17 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import static Utils.Timer.*;
+
 public class Main extends Application {
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException, InterruptedException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("MainView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 640, 480);
         stage.setTitle("KrampTeckResto");
         stage.setScene(scene);
         stage.show();
+        createInstance(25);
     }
 
     public static void main(String[] args) {
