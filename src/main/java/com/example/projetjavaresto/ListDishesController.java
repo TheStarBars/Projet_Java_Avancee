@@ -31,12 +31,12 @@ import static Utils.ReturnMainMenu.MainMenu;
 public class ListDishesController {
 
     @FXML
-    private ListView<Plat> DishesListView; // ✅ maintenant typée avec Plat
+    private ListView<Plat> DishesListView;
 
     @FXML
     private Button ReturnButton;
 
-    private List<Plat> plats = new ArrayList<>(); // on la garde pour les détails
+    private List<Plat> plats = new ArrayList<>();
 
     @FXML
     public void initialize() throws SQLException {

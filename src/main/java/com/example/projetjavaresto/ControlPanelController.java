@@ -1,9 +1,7 @@
 package com.example.projetjavaresto;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
 import java.lang.reflect.Type;
@@ -11,6 +9,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -21,16 +20,20 @@ import Class.Employe;
 import Class.Plat;
 import Class.Commande;
 import Class.Table;
+
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
+
 
 import static Utils.ConnectDB.getConnection;
 
 public class ControlPanelController {
     @FXML
     private ListView<String> ControlListView;
-
+    @FXML
+    private ListView<String> ResarchResultListView;
     @FXML
     private Button valueOne;
     @FXML
@@ -43,14 +46,26 @@ public class ControlPanelController {
     private Button DeliveredButton;
     @FXML
     private Button PreparationButton;
-
-
+    @FXML
+    private Button SearchButton;
+    @FXML
+    private Label MostLabel;
+    @FXML
+    private Label LeastLabel;
+    @FXML
+    private Label TotalLabel;
+    @FXML
+    private TextField SearchBarField;
 
     private List<Commande> commandes = new ArrayList<>();
     private List<Employe> employes = new ArrayList<>();
     private List<Table> tables = new ArrayList<>();
+    private List<Plat> plats = new ArrayList<>(); // on la garde pour les détails
 
-
+    @FXML
+    public void initialize() throws SQLException {
+            DishesCost();
+    }
 
     public void DeliverdCommand(javafx.event.ActionEvent event) throws SQLException {
         commandes.clear();
@@ -186,4 +201,62 @@ public class ControlPanelController {
         ControlListView.setItems(FXCollections.observableList(employesFiltered));
 
     }
+
+    public void DishesCost() throws SQLException {
+        Connection connection = getConnection();
+        Statement statement = connection.createStatement();
+        String query = "select * from plats";
+        ResultSet rs = statement.executeQuery(query);
+        while (rs.next()) {
+            plats.add(new Plat(
+                    rs.getString("nom"),
+                    rs.getString("description"),
+                    rs.getDouble("prix"),
+                    rs.getDouble("cout"),
+                    rs.getString("image")
+            ));
+            plats.stream()
+                    .max(Comparator.comparingDouble(Plat::getPrice))
+                    .ifPresent(plat -> MostLabel.setText(plat.getName() + " : " + String.format("%.2f€", plat.getPrice())));
+
+            plats.stream()
+                    .min(Comparator.comparingDouble(Plat::getPrice))
+                    .ifPresent(plat -> LeastLabel.setText(plat.getName() + " : " + String.format("%.2f€", plat.getPrice())));
+
+            double total = plats.stream()
+                    .mapToDouble(Plat::getPrice)
+                    .sum();
+            TotalLabel.setText(String.format("%.2f€", total));
+
+        }
+    }
+
+    public void SearchBar() throws SQLException {
+        String res = SearchBarField.getText().toLowerCase();
+        plats.clear();
+        if (res.trim().isEmpty()) {
+            ResarchResultListView.getItems().clear();
+            return;
+        }
+        Connection connection = getConnection();
+        Statement statement = connection.createStatement();
+        String query = "select * from plats";
+        ResultSet rs = statement.executeQuery(query);
+        List<String> research = null;
+        while (rs.next()) {
+            plats.add(new Plat(
+                    rs.getString("nom"),
+                    rs.getString("description"),
+                    rs.getDouble("prix"),
+                    rs.getDouble("cout"),
+                    rs.getString("image")
+            ));
+            research = plats.stream()
+                    .filter(plat -> plat.getDescription().toLowerCase().contains(res))
+                    .map(Plat::getName)
+                    .collect(Collectors.toList());
+        }
+        ResarchResultListView.setItems(FXCollections.observableList(research));
+    }
+
 }
