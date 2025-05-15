@@ -47,9 +47,18 @@ public class Timer extends Thread{
     public synchronized void stopTimer(){
         running=false;
     }
-    //@todo change Command -> Oder  Plat -> Dishe later Employe -> Employee
-    public boolean canTakeCommande(){
-        return getTimeLeft() > 15 * 60;
+
+    public boolean canTakeCommande() {
+        int time = getTimeLeft();
+
+        if (time > 1490) {
+
+            return true;
+        } else {
+
+            return false;
+        }
     }
+
 
 }

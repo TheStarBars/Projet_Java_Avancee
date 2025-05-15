@@ -64,11 +64,13 @@ public class MainController {
 
         TimerLabel.setText(String.format("%02d:%02d", minutesPart, secondsPart));
 
-        if (timer.getTimeLeft() <= 10) {
+        if (timer.getTimeLeft() <= 1 * 60) {
             TimerLabel.setStyle("-fx-text-fill: #D84A4A;"); // Red
         } else {
             TimerLabel.setStyle("-fx-text-fill: #FF914D;"); // Orange
         }
+        System.out.println("Time left: " + timer.getTimeLeft() + " | canTakeCommande: " + timer.canTakeCommande());
+
 
     }
 
@@ -85,6 +87,8 @@ public class MainController {
             myNewScene = FXMLLoader.load(MainController.class.getResource("ListDishesView.fxml"));
         }else if (event.getSource() == AddCommandButton) {
             if (!timer.canTakeCommande()) {
+                AddCommandButton.setDisable(true);
+                AddCommandButton.setText("Commande fermée");
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Timer dépasser");
                 alert.setHeaderText(null);
