@@ -4,11 +4,13 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -24,8 +26,10 @@ import Class.Employe;
 import Class.Plat;
 import Class.Commande;
 import Class.Table;
+import javafx.stage.Stage;
 
 import static Utils.ConnectDB.getConnection;
+import static Utils.ReturnMainMenu.AdminMenu;
 
 /**
  * Controller class for the control panel of the restaurant management application.
@@ -312,6 +316,11 @@ public class ControlPanelController {
         }
 
         ResarchResultListView.setItems(FXCollections.observableList(research));
+    }
+    @FXML
+    private void ReturnMainMenu(javafx.event.ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        AdminMenu(stage);
     }
 }
 

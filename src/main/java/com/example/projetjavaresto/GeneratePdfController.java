@@ -8,19 +8,23 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.kernel.colors.ColorConstants;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static Utils.ConnectDB.getConnection;
+import static Utils.ReturnMainMenu.AdminMenu;
 
 /**
  * Controller class for generating a PDF report of restaurant revenue.
@@ -113,6 +117,11 @@ public class GeneratePdfController {
                 e.printStackTrace();
             }
         }
+    }
+    @FXML
+    private void ReturnMainMenu(javafx.event.ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        AdminMenu(stage);
     }
 }
 
