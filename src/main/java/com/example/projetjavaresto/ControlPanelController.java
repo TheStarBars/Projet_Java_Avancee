@@ -143,7 +143,12 @@ public class ControlPanelController {
                                 .orElse(null);
                         return table != null && table.getStatus().equals("Occupée");
                     })
-                    .map(c -> "Table n°" + c.getTableId() + " - " + c.getStatus())
+                    .map(c -> {
+                        double total = c.getPlatArrayList().stream()
+                                .mapToDouble(Plat::getPrice)
+                                .sum();
+                        return "Table n°" + c.getTableId() + " - " + c.getStatus() + " - Total : " +  String.format("%.2f€", total);
+                    })
                     .limit(5)
                     .collect(Collectors.toList());
         }
@@ -187,9 +192,12 @@ public class ControlPanelController {
                         String nomPlat2 = c2.getPlatArrayList().isEmpty() ? "" : c2.getPlatArrayList().get(0).getName();
                         int compareNom = nomPlat1.compareTo(nomPlat2);
                         return compareNom != 0 ? compareNom : c1.getDateHeureService().compareTo(c2.getDateHeureService());
-                    })
-                    .map(c -> "Table n°" + c.getTableId() + " - " + c.getStatus())
-                    .collect(Collectors.toList());
+                    }).map(c -> {
+                        double total = c.getPlatArrayList().stream()
+                                .mapToDouble(Plat::getPrice)
+                                .sum();
+                        return "Table n°" + c.getTableId() + " - " + c.getStatus() + " - Total : " +  String.format("%.2f€", total);
+                    }).collect(Collectors.toList());
         }
 
         ControlListView.setItems(FXCollections.observableList(commandesFiltrees));
