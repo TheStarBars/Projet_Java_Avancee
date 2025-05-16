@@ -1,7 +1,6 @@
 package com.example.projetjavaresto;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,11 +8,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+
 import javafx.util.Duration;
 import Utils.Timer;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
+
 
 /**
  * Controller class for the main menu of the restaurant management application.
@@ -99,8 +103,8 @@ public class MainController extends Thread {
                 alert.setHeaderText(null);
                 alert.setContentText("Votre temps de service est fini");
                 alert.showAndWait();
-                stage = (Stage) AddCommandButton.getScene().getWindow();
-                myNewScene = FXMLLoader.load(MainController.class.getResource("MainView.fxml"));
+                System.out.println("Trop tard pour commander");
+                return;
             }
 
         } else if (event.getSource() == ListCommandButton) {

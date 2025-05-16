@@ -8,7 +8,6 @@ import java.sql.SQLException;
  * Utility class for establishing a connection to the MySQL database.
  */
 public class ConnectDB {
-
     private static final String URL = "jdbc:mysql://localhost:3306/javaavanceeresto ";
     private static final String USER = "root";
     private static final String PASSWORD = "root";
