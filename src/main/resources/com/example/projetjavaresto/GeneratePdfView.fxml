@@ -15,6 +15,7 @@
          </font>
       </Label>
       <Button fx:id="generatePdfButton" layoutX="246.0" layoutY="360.0" mnemonicParsing="false" onAction="#generatePDF" text="Générer le PDF" />
-      <Label layoutX="278.0" layoutY="343.0" prefHeight="17.0" prefWidth="36.0" fx:id="revenueLabel"/>
+      <Label fx:id="revenueLabel" layoutX="278.0" layoutY="343.0" prefHeight="17.0" prefWidth="36.0" />
+      <Button mnemonicParsing="false" text="Button" onAction="#ReturnMainMenu"/>
    </children>
 </AnchorPane>

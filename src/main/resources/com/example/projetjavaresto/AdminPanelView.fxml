@@ -25,7 +25,9 @@
       <Button fx:id="EmployeeAddButton" layoutX="163.0" layoutY="175.0" mnemonicParsing="false" onAction="#NavigateTo" text="Button" />
       <Button fx:id="EmployeeListButton" layoutX="384.0" layoutY="175.0" mnemonicParsing="false" onAction="#NavigateTo" text="Button" />
       <Button layoutY="-1.0" mnemonicParsing="false" onAction="#ReturnMainMenu" text="Retour" />
-      <Button fx:id="GeneratePdfButton" layoutX="159.0" layoutY="310.0" mnemonicParsing="false" text="Button" onAction="#NavigateTo" />
+      <Button fx:id="GeneratePdfButton" layoutX="159.0" layoutY="310.0" mnemonicParsing="false" onAction="#NavigateTo" text="Button" />
       <Label layoutX="149.0" layoutY="285.0" text="GeneratePDF" />
+      <Label layoutX="375.0" layoutY="285.0" text="ControlPanel" />
+      <Button fx:id="ControlPanelButton" layoutX="385.0" layoutY="310.0" mnemonicParsing="false" onAction="#NavigateTo" text="Button" />
    </children>
 </AnchorPane>

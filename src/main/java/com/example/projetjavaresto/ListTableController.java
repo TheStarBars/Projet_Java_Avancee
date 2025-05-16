@@ -29,6 +29,11 @@ import java.util.stream.Collectors;
 import static Utils.ConnectDB.getConnection;
 import static Utils.ReturnMainMenu.MainMenu;
 
+/**
+ * Controller class for managing the list of tables in the restaurant.
+ * It handles displaying free and occupied tables, updating table status,
+ * and showing detailed information about a selected table.
+ */
 public class ListTableController {
 
     @FXML
@@ -37,22 +42,24 @@ public class ListTableController {
     @FXML
     private ListView<Table> OccupedTableListView;
 
-
-
     @FXML
     private Button preparee;
 
     @FXML
     private Button annulee;
 
-
     private List<Table> tables = new ArrayList<>();
 
+    /**
+     * Initializes the controller by loading table data,
+     * setting up custom cell factories, and handling double-click events.
+     *
+     * @throws SQLException if a database access error occurs
+     */
     @FXML
     public void initialize() throws SQLException {
         reloadTableData();
 
-        // Affichage personnalisé
         FreeTableListView.setCellFactory(listView -> new ListCell<>() {
             @Override
             protected void updateItem(Table table, boolean empty) {
@@ -77,7 +84,6 @@ public class ListTableController {
             }
         });
 
-        // Gestion du double-clic
         FreeTableListView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 Table selectedTable = FreeTableListView.getSelectionModel().getSelectedItem();
@@ -88,6 +94,12 @@ public class ListTableController {
         });
     }
 
+    /**
+     * Loads the table data from the database and updates the list views
+     * for free and occupied tables.
+     *
+     * @throws SQLException if a database access error occurs
+     */
     private void reloadTableData() throws SQLException {
         tables.clear();
         Connection connect = getConnection();
@@ -103,17 +115,21 @@ public class ListTableController {
         }
 
         List<Table> freeTableList = tables.stream()
-                .filter((C) -> Objects.equals(C.getStatus(), "Libre"))
+                .filter(table -> Objects.equals(table.getStatus(), "Libre"))
                 .collect(Collectors.toList());
         FreeTableListView.setItems(FXCollections.observableList(freeTableList));
 
         List<Table> occupedTableList = tables.stream()
-                .filter((C) -> Objects.equals(C.getStatus(), "Occupée"))
+                .filter(table -> Objects.equals(table.getStatus(), "Occupée"))
                 .collect(Collectors.toList());
         OccupedTableListView.setItems(FXCollections.observableList(occupedTableList));
     }
 
-    // Affiche les détails dans une popup
+    /**
+     * Shows a popup window displaying detailed information about a table.
+     *
+     * @param table the table whose details are to be shown
+     */
     private void showPlatPopup(Table table) {
         Stage popupStage = new Stage();
         popupStage.setTitle("Détails de la Table");
@@ -133,11 +149,18 @@ public class ListTableController {
         popupStage.showAndWait();
     }
 
+    /**
+     * Updates the status of the selected occupied table to 'Libre' (free)
+     * and reloads the table data.
+     *
+     * @param event the action event triggered by the button
+     * @throws SQLException if a database access error occurs
+     */
     @FXML
     private void UpdateStatut(javafx.event.ActionEvent event) throws SQLException {
         Table selectedTable = OccupedTableListView.getSelectionModel().getSelectedItem();
         String strId = selectedTable.getId();
-        Integer id = Integer.parseInt(strId);
+        int id = Integer.parseInt(strId);
 
         if (id != 0) {
             Connection connect = getConnection();
@@ -149,9 +172,16 @@ public class ListTableController {
         }
     }
 
+    /**
+     * Returns to the main menu by switching the current stage.
+     *
+     * @param event the action event triggered by the button
+     * @throws IOException if an I/O error occurs
+     */
     @FXML
     private void ReturnMainMenu(javafx.event.ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         MainMenu(stage);
     }
 }
+

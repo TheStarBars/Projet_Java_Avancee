@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -24,22 +23,28 @@ import java.util.stream.Collectors;
 import static Utils.ConnectDB.getConnection;
 import static Utils.ReturnMainMenu.AdminMenu;
 
+/**
+ * Controller for the admin panel that displays and manages the list of employees.
+ */
 public class AdminPanelListEmployeeController {
 
-
     @FXML
-    private ListView<Employe> EmployeListView; // ✅ maintenant typée avec Plat
-
+    private ListView<Employe> EmployeListView;
     @FXML
     private TextField HourField;
 
-    private List<Employe> employes = new ArrayList<>(); // on la garde pour les détails
+    private List<Employe> employes = new ArrayList<>();
 
+    /**
+     * Initializes the controller by loading employees from the database
+     * and configuring the ListView for display and interaction.
+     *
+     * @throws SQLException if a database error occurs
+     */
     @FXML
     public void initialize() throws SQLException {
         getEmployes();
 
-        // ✅ Custom affichage dans la ListView
         EmployeListView.setCellFactory(listView -> new ListCell<>() {
             @Override
             protected void updateItem(Employe employe, boolean empty) {
@@ -47,12 +52,11 @@ public class AdminPanelListEmployeeController {
                 if (empty || employe == null) {
                     setText(null);
                 } else {
-                    setText(employe.getName() + " --- " + employe.getPost() );
+                    setText(employe.getName() + " --- " + employe.getPost());
                 }
             }
         });
 
-        // ✅ Gérer le clic (simple ou double selon ton besoin)
         EmployeListView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 Employe selectedEmploye = EmployeListView.getSelectionModel().getSelectedItem();
@@ -63,6 +67,11 @@ public class AdminPanelListEmployeeController {
         });
     }
 
+    /**
+     * Retrieves all employees from the database and displays them in the ListView.
+     *
+     * @throws SQLException if a database error occurs
+     */
     private void getEmployes() throws SQLException {
         employes.clear();
         Connection connect = getConnection();
@@ -77,24 +86,28 @@ public class AdminPanelListEmployeeController {
                     rs.getInt("nb_heure_travaillee"),
                     rs.getInt("age")
             ));
-            List<Employe> employeList = employes.stream().collect(Collectors.toList());
 
+            List<Employe> employeList = employes.stream().collect(Collectors.toList());
             EmployeListView.setItems(FXCollections.observableList(employeList));
         }
     }
 
-    // ✅ Affiche les détails dans une popup
+    /**
+     * Displays a popup window showing the selected employee's details.
+     *
+     * @param employe the selected employee
+     */
     private void showPlatPopup(Employe employe) {
         Stage popupStage = new Stage();
-        popupStage.setTitle("Détails du plat");
+        popupStage.setTitle("Employee Details");
 
         VBox vbox = new VBox(10);
         vbox.setStyle("-fx-padding: 20;");
         vbox.getChildren().addAll(
-                new Label("Nom : " + employe.getName()),
-                new Label("Poste : " + employe.getPost()),
-                new Label("Nombre d'heure travailler : " + employe.getWorkedHour()),
-                new Label("Age :" + employe.getAge())
+                new Label("Name: " + employe.getName()),
+                new Label("Position: " + employe.getPost()),
+                new Label("Worked Hours: " + employe.getWorkedHour()),
+                new Label("Age: " + employe.getAge())
         );
 
         Scene scene = new Scene(vbox);
@@ -103,47 +116,67 @@ public class AdminPanelListEmployeeController {
         popupStage.showAndWait();
     }
 
+    /**
+     * Deletes the selected employee from the database.
+     *
+     * @param event the action event triggered by the delete button
+     * @throws SQLException if a database error occurs
+     */
     @FXML
     private void DeleteEmploye(javafx.event.ActionEvent event) throws SQLException {
         Employe selectedEmploye = EmployeListView.getSelectionModel().getSelectedItem();
         int id = selectedEmploye.getId();
-        if (id != 0){
-        Connection connect = getConnection();
-        Statement statement = connect.createStatement();
-        statement.executeUpdate("DELETE FROM employe WHERE id = "+ id +"  ;");
+        if (id != 0) {
+            Connection connect = getConnection();
+            Statement statement = connect.createStatement();
+            statement.executeUpdate("DELETE FROM employe WHERE id = " + id + ";");
         }
         getEmployes();
-
     }
 
+    /**
+     * Adds worked hours to the selected employee and updates the database.
+     *
+     * @param event the action event triggered by the add hours button
+     * @throws SQLException if a database error occurs
+     */
     @FXML
     private void AddHour(javafx.event.ActionEvent event) throws SQLException {
         Employe selectedEmploye = EmployeListView.getSelectionModel().getSelectedItem();
         int hours = Integer.parseInt(HourField.getText());
         int id = selectedEmploye.getId();
-        if (id != 0){
+
+        if (id != 0) {
             Connection connect = getConnection();
             Statement statement = connect.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT nb_heure_travaillee FROM employe WHERE id = "+ id +";");
+            ResultSet rs = statement.executeQuery("SELECT nb_heure_travaillee FROM employe WHERE id = " + id + ";");
 
             if (rs.next()) {
                 int hoursWorked = rs.getInt("nb_heure_travaillee");
                 int totalHours = hoursWorked + hours;
-                statement.executeUpdate("UPDATE employe SET nb_heure_travaillee = " + totalHours + " WHERE id = "+ id +";");
+                statement.executeUpdate("UPDATE employe SET nb_heure_travaillee = " + totalHours + " WHERE id = " + id + ";");
+
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Success");
-                alert.setHeaderText("Ajouter avec succes");
+                alert.setHeaderText("Hours added successfully");
                 alert.showAndWait();
             }
         }
+
         HourField.clear();
         getEmployes();
-
     }
 
+    /**
+     * Navigates back to the admin main menu.
+     *
+     * @param event the action event triggered by the return button
+     * @throws IOException if the menu view cannot be loaded
+     */
     @FXML
     private void ReturnMainMenu(javafx.event.ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         AdminMenu(stage);
     }
 }
+

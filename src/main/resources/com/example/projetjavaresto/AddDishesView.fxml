@@ -28,6 +28,12 @@
             <Font size="16.0" />
          </font></Label>
       <TextField fx:id="priceField" />
+      <Label prefHeight="25.0" prefWidth="157.0" text="Cout de fabriquation:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="costField" />
       <Label prefHeight="32.0" prefWidth="61.0" text="Image:">
          <font>
             <Font size="16.0" />
@@ -35,6 +41,6 @@
       <Button mnemonicParsing="false" onAction="#UploadFile" text="import" />
       <Label fx:id="pathLabel" />
       <Button mnemonicParsing="false" onAction="#handleSubmit" text="submit" />
-      <Button mnemonicParsing="false" text="Retour" onAction="#ReturnMainMenu" />
+      <Button mnemonicParsing="false" onAction="#ReturnMainMenu" text="Retour" />
    </children>
 </VBox>

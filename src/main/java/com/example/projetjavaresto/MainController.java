@@ -11,16 +11,27 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import Class.Timer;
+
+import javafx.util.Duration;
+import Utils.Timer;
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 
-public class MainController {
+
+/**
+ * Controller class for the main menu of the restaurant management application.
+ * Handles navigation between views and displays a countdown timer.
+ */
+public class MainController extends Thread {
+
     @FXML
     public Label AddDishesLabel;
     @FXML
     public Label ListDishesLabel;
+    @FXML
+    public Label TimerLabel;
+
     @FXML
     public Button AddDishesButton;
     @FXML
@@ -33,62 +44,60 @@ public class MainController {
     public Button AddTableButton;
     @FXML
     public Button ListTableButton;
-
     @FXML
     public Button AdminPanelButton;
 
+    private Timeline timeline;
+
+    /**
+     * Initializes the controller after the root element has been processed.
+     * Starts the countdown timer display.
+     */
     @FXML
-    public Label TimerLabel;
-
-    @FXML
-    private ImageView LogoView;
-
-    private Timer timer;
-
     public void initialize() {
-        LogoView.setImage(new Image(getClass().getResourceAsStream("/assets/Logo.png")));
-        startTimer();
-        updateUI();
-
+        startTimerDisplay();
     }
 
-    public void startTimer() {
-        timer = Timer.getInstance(25, () -> Platform.runLater(this::updateUI));
-
+    /**
+     * Starts a timeline that updates the timer label every second
+     * with the remaining service time from the singleton Timer.
+     */
+    private void startTimerDisplay() {
+        timeline = new Timeline(
+                new KeyFrame(Duration.seconds(1), event -> {
+                    int timeLeft = Timer.getInstance().getTimeLeft();
+                    int minutes = timeLeft / 60;
+                    int seconds = timeLeft % 60;
+                    TimerLabel.setText(String.format("Temps restant : %02d:%02d", minutes, seconds));
+                })
+        );
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
     }
 
-    private void updateUI() {
-        int seconds = timer.getTimeLeft();
-        int minutesPart = seconds / 60;
-        int secondsPart = seconds % 60;
-
-        TimerLabel.setText(String.format("%02d:%02d", minutesPart, secondsPart));
-
-        if (timer.getTimeLeft() <= 1 * 60) {
-            TimerLabel.setStyle("-fx-text-fill: #D84A4A;"); // Red
-        } else {
-            TimerLabel.setStyle("-fx-text-fill: #FF914D;"); // Orange
-        }
-        System.out.println("Time left: " + timer.getTimeLeft() + " | canTakeCommande: " + timer.canTakeCommande());
-
-
-    }
-
-
-    public void NavigateTo(javafx.event.ActionEvent event ) throws IOException {
+    /**
+     * Handles navigation to the appropriate view based on the clicked button.
+     *
+     * @param event the action event triggered by clicking a navigation button
+     * @throws IOException if the FXML resource fails to load
+     */
+    public void NavigateTo(javafx.event.ActionEvent event) throws IOException {
         Stage stage = null;
         Parent myNewScene = null;
 
-        if (event.getSource() == AddDishesButton){
+        if (event.getSource() == AddDishesButton) {
             stage = (Stage) AddDishesButton.getScene().getWindow();
             myNewScene = FXMLLoader.load(MainController.class.getResource("AddDishesView.fxml"));
-        }else if (event.getSource() == ListDishesButton) {
+
+        } else if (event.getSource() == ListDishesButton) {
             stage = (Stage) ListDishesButton.getScene().getWindow();
             myNewScene = FXMLLoader.load(MainController.class.getResource("ListDishesView.fxml"));
-        }else if (event.getSource() == AddCommandButton) {
-            if (!timer.canTakeCommande()) {
-                AddCommandButton.setDisable(true);
-                AddCommandButton.setText("Commande fermée");
+
+        } else if (event.getSource() == AddCommandButton) {
+            if (Timer.getInstance().canTakeCommande()) {
+                stage = (Stage) AddCommandButton.getScene().getWindow();
+                myNewScene = FXMLLoader.load(MainController.class.getResource("AddCommandView.fxml"));
+            } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Timer dépasser");
                 alert.setHeaderText(null);
@@ -97,18 +106,20 @@ public class MainController {
                 System.out.println("Trop tard pour commander");
                 return;
             }
-            stage = (Stage) AddCommandButton.getScene().getWindow();
-            myNewScene = FXMLLoader.load(MainController.class.getResource("AddCommandView.fxml"));
-        }else if (event.getSource() == ListCommandButton) {
+
+        } else if (event.getSource() == ListCommandButton) {
             stage = (Stage) ListCommandButton.getScene().getWindow();
             myNewScene = FXMLLoader.load(MainController.class.getResource("ListCommandView.fxml"));
-        }else if (event.getSource() == AddTableButton) {
+
+        } else if (event.getSource() == AddTableButton) {
             stage = (Stage) AddTableButton.getScene().getWindow();
             myNewScene = FXMLLoader.load(MainController.class.getResource("AddTableView.fxml"));
-        }else if (event.getSource() == ListTableButton) {
+
+        } else if (event.getSource() == ListTableButton) {
             stage = (Stage) ListTableButton.getScene().getWindow();
             myNewScene = FXMLLoader.load(MainController.class.getResource("ListTableView.fxml"));
-        }else if (event.getSource() == AdminPanelButton) {
+
+        } else if (event.getSource() == AdminPanelButton) {
             stage = (Stage) AdminPanelButton.getScene().getWindow();
             myNewScene = FXMLLoader.load(MainController.class.getResource("AdminConnexionView.fxml"));
         }
@@ -117,7 +128,6 @@ public class MainController {
         stage.setScene(scene);
         stage.setTitle("KrampTeckResto");
         stage.show();
-
     }
-
 }
+
